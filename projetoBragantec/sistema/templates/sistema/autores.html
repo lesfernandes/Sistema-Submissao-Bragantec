@@ -1,0 +1,14 @@
+{% extends 'adminlte/base.html' %}
+{% block title %}Bragantec{% endblock %}
+{% block content %}
+<ul>
+	{% for autor in autores %}
+		<a href="{% url 'editar_autor' autor.id %}">
+			<li>
+				{{ autor.nome }}
+			</li>
+		</a>
+	{% endfor %}
+</ul>
+<a href="{% url 'criar_autores' %}">Novo Autor</a>
+{% endblock %}
