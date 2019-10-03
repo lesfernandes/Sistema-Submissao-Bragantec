@@ -1,6 +1,9 @@
-{% extends 'adminlte/base.html' %}
-{% block title %}Cadastro Autor{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastro</title>
+</head>
+<body>
 <h1>Editar/Novo Autor</h1>
 <form method="POST">
 	{% csrf_token %}
@@ -9,8 +12,10 @@
 		Salvar
 	</button>
 </form>
-
 {% if autor %}
 	<a href="{% url 'deletar_autor' autor.id %}">Deletar</a>
 {% endif %}
-{% endblock %}
+</body>
+</html>
+
+

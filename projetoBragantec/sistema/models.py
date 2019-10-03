@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class Autor(models.Model):
@@ -8,9 +9,9 @@ class Autor(models.Model):
 	curso = models.CharField('Curso', max_length=100, default=None)
 	serie = models.CharField('Série', max_length=100, default=None)
 	instituicao = models.CharField('Instituição', max_length=100, default=None)
-	senha = models.CharField('Senha', max_length=8)
+	
 	def __str__(self):
-		return self.nome
+		return self.email
 
 	class Meta:
 		db_table = "autor"

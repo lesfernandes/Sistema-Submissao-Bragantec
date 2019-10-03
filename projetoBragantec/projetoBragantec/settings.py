@@ -145,3 +145,5 @@ DATETIME_FORMAT='d/m/Y H:i:s'
 DATE_FORMAT="d/m/Y"
 
 TIME_INPUT_FORMATS = ['%I:%M %p']
+
+#AUTH_USER_MODEL = 'sistema.Autor'
