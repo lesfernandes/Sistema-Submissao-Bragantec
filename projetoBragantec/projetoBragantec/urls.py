@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from cruds_adminlte.urls import crud_for_app
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('sistema.urls')),
 ]
 
-urlpatterns += crud_for_app('sistema', login_required=True)
+urlpatterns += crud_for_app('sistema')
