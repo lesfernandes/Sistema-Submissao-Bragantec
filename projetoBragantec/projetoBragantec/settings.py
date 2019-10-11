@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sistema',
     'django_adminlte', 
-    'django_adminlte_theme',
+    'crispy_forms',
+    'django_select2',
+    'easy_thumbnails',
+    'image_cropping',
+    'django_ajax',
+    'cruds_adminlte',
 ]
 
 MIDDLEWARE = [

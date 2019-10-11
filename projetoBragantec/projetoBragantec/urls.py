@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from cruds_adminlte.urls import crud_for_app
 
 urlpatterns = [
-	path('', include('sistema.urls')),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += crud_for_app('sistema', login_required=True)
