@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from cruds_adminlte.urls import crud_for_app
-
+from sistema.forms import RegisterForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sistema.urls')),
 ]
 
-urlpatterns += crud_for_app('sistema')
+custom_forms = { 'add_autor': RegisterForm}
+urlpatterns += crud_for_app('sistema', modelforms=custom_forms)
