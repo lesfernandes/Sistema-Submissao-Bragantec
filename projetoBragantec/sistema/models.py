@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class Autor(AbstractUser):
 
@@ -16,13 +17,20 @@ class Autor(AbstractUser):
     USERNAME_FIELD = 'username'
 
     def __str__(self):
-        return self.name
-
-    def get_full_name(self):
-        return str(self)
+        return self.email
 
     class Meta:
         verbose_name = "Autor"
         verbose_name_plural = "Autores"
 
-        
+class Projeto(models.Model):
+    resumo = models.CharField(max_length=200)
+    email = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    area = models.CharField(max_length=10)
+    palavras_chave = models.CharField(max_length=30)
+    plano_pesquisa = models.FileField(upload_to='uploads/')
+    link_video = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "Projeto"
+        verbose_name_plural = "Projetos"
