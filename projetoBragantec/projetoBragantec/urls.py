@@ -24,4 +24,5 @@ urlpatterns = [
 ]
 
 custom_forms = { 'add_autor': RegisterForm}
-urlpatterns += crud_for_app('sistema', modelforms=custom_forms)
+urlpatterns += crud_for_app('sistema',  views=['update', 'list'], login_required=True)
+urlpatterns += crud_for_app('sistema', modelforms=custom_forms, views=['create'], login_required=False)

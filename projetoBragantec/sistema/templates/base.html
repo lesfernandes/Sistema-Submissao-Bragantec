@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<h1>SITE SUBMISSÃO BRAGANTEC</h1>
+	<div class="header">
+	    <ul>
+	        <li><a href="{% url 'index' %}">Início</a></li>
+	        <li><a href="{% url 'login' %}">Entrar</a></li>
+	        <li><a href="{% url 'sistema_autor_create' %}">Cadastre-se</a></li>
+	    </ul>
+	</div>
+	<div class="content">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+</html>

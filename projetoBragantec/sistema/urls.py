@@ -1,6 +1,10 @@
 from django.urls import path, include
-from . import views
+import sistema.views
+from django.contrib.auth import views
 
 urlpatterns = [
-	path('', views.index, name='index'),
+	path('', sistema.views.index, name='index'),
+	path('login/', views.LoginView.as_view(), name='login'),
+	path('logout/', views.LogoutView.as_view(), name='logout'),
+	path('dashboard/', sistema.views.dashboard, name='dashboard'),
 ]

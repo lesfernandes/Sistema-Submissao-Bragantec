@@ -13,8 +13,8 @@ class Autor(AbstractUser):
     serie = models.CharField('Série', max_length=100,blank=True)
     instituicao = models.CharField('Instituição', max_length=100)
 
-    REQUIRED_FIELDS = ['email']
-    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['name', 'tipo', 'instituicao']
+    USERNAME_FIELD = 'email'
 
     def __str__(self):
         return self.email
