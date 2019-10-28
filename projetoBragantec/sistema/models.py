@@ -3,11 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 class Autor(AbstractUser):
-
-    username = models.CharField('username', max_length=150, unique=True)
     email = models.EmailField('E-mail', unique=True)
     name = models.CharField('Nome', max_length=100)
-    tipo = models.CharField(max_length=100)
+    tipos = [('E', 'Estudante'), ('O', 'Orientador')]
+    tipo = models.CharField(choices=tipos, max_length=100)
     idade = models.IntegerField('Idade')
     curso = models.CharField('Curso', max_length=100,blank=True)
     serie = models.CharField('Série', max_length=100,blank=True)
@@ -26,7 +25,8 @@ class Autor(AbstractUser):
 class Projeto(models.Model):
     resumo = models.CharField(max_length=200)
     email = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    area = models.CharField(max_length=10)
+    areas = [('CHL', 'Ciências Humanas e Linguagens'), ('CNE', 'Ciências da Natureza e Exatas'), ('I', 'Informática'), ('E', 'Engenharias')]
+    area = models.CharField(choices=areas, max_length=100)
     palavras_chave = models.CharField(max_length=30)
     plano_pesquisa = models.FileField(upload_to='uploads/')
     link_video = models.CharField(max_length=100)
