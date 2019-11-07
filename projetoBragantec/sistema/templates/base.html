@@ -1,18 +1,27 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FEIRA DE CIÊNCIA E TECNOLOGIA - BRAGANTEC">
+	<title>BRAGANTEC</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-	<h1>SITE SUBMISSÃO BRAGANTEC</h1>
-	<div class="header">
-	    <ul>
-	        <li><a href="{% url 'index' %}">Início</a></li>
-	        <li><a href="{% url 'login' %}">Entrar</a></li>
-	        <li><a href="{% url 'sistema_autor_create' %}">Cadastre-se</a></li>
-	    </ul>
-	</div>
-	<div class="content">
-		{% block content %}{% endblock %}
+	<div class="container">
+		<div class="header">
+			<img src="{% static 'img/banner.jpg' %}" alt="IX BRAGANTEC - Feira de Ciência e Tecnologia do IFSP" />
+			<div class="menu">
+				<ul>
+		        	<li><a href="{% url 'index' %}">INÍCIO</a></li>
+		        	<li><a href="#">SOBRE</a></li>
+		        	<li><a href="{% url 'sistema_autor_create' %}">CADASTRO</a></li>
+		        	<li><a href="{% url 'login' %}">ENTRAR</a></li>
+	    		</ul>
+			</div>
+		</div>
+	    {% block content %}{% endblock %}
 	</div>
 </body>
 </html>
