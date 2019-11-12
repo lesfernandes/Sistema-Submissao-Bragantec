@@ -25,6 +25,7 @@ urlpatterns = [
 ]
 
 custom_forms = { 'add_autor': RegisterForm}
+<<<<<<< HEAD
 urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
 	views=['create'],
 	add_form=RegisterForm,
@@ -33,3 +34,7 @@ urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'),
 	views=['list'],
 	add_form=RegisterForm,
 	login_required=True)
+=======
+urlpatterns += crud_for_app('sistema',  views=['update', 'list'], login_required=True)
+urlpatterns += crud_for_app('sistema', modelforms=custom_forms, views=['create'], login_required=False)
+>>>>>>> 1c0aab3... menu, dashboard
