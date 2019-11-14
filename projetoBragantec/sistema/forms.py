@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import Projeto
+from .models import Projeto, Autor
 
 User = get_user_model()
 
@@ -28,10 +28,12 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email', 'name', 'tipo', 
-        'idade', 'curso', 'serie', 'instituicao']
+        fields = ['username']
 
-
+class AutorForm(forms.ModelForm):
+    class Meta:
+        model = Autor
+        fields = '__all__'
 
 class SubmitForm(forms.ModelForm):
     resumo = forms.CharField(widget=forms.Textarea)

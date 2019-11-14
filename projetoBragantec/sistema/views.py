@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Projeto
 from django.contrib.auth import authenticate, login
-from .forms import RegisterForm, SubmitForm
+from .forms import RegisterForm, SubmitForm, AutorForm
 
 def index(request):
 	return render(request, 'index.html', {})
@@ -12,12 +12,12 @@ def dashboard(request):
 
 def register(request):
 	if request.method == 'POST':
-		form = RegisterForm(request.POST)
+		form = AutorForm(request.POST)
 		if form.is_valid():
 			user = form.save()
 			return redirect('submit_project')
 	else:
-		form = RegisterForm()
+		form = AutorForm()
 	return render(request, 'registration/register.html', {'form': form})
 
 def submit_project(request):

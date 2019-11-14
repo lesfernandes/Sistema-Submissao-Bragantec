@@ -30,6 +30,7 @@ urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Autor'), 
 	views=['list', 'detail', 'delete', 'update'],
 	login_required=True)
+
 urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Projeto'),
 	views=['delete', 'detail', 'update', 'list'], 

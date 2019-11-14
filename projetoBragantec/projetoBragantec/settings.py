@@ -150,6 +150,6 @@ DATE_FORMAT="d/m/Y"
 
 TIME_INPUT_FORMATS = ['%I:%M %p']
 
-AUTH_USER_MODEL = 'sistema.Autor'
+AUTH_USER_MODEL = 'sistema.User'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'index'
