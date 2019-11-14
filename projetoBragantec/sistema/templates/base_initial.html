@@ -7,6 +7,10 @@
     <meta name="description" content="FEIRA DE CIÊNCIA E TECNOLOGIA - BRAGANTEC">
 	<title>BRAGANTEC</title>
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+	{% block javascript %}
+	{% endblock %}
 </head>
 <body>
 	<div class="container">
@@ -16,16 +20,18 @@
 				<ul>
 		        	<li><a href="{% url 'index' %}">INÍCIO</a></li>
 		        	<li><a href="#">SOBRE</a></li>
-		        	<li><a href="{% url 'sistema_autor_create' %}">CADASTRO</a></li>
+		        	<li><a href="{% url 'register' %}">CADASTRO</a></li>
 		        	<li><a href="{% url 'login' %}">ENTRAR</a></li>
 	    		</ul>
 			</div>
 		</div>
+		<div class="content">
 	    {% block content %}{% endblock %}
 	</div>
-	<footer>
+	</div>
+	<!--<footer>
 		<p>Apoio: </p>
 		<a href="http://www.cnpq.br/"><img src="{% static 'img/cnpq.jpg' %}"></a>
-	</footer>
+	</footer>-->
 </body>
 </html>

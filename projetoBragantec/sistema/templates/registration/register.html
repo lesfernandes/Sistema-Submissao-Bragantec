@@ -1,0 +1,108 @@
+{% extends "base_initial.html" %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{% block javascript %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#form2').hide();
+		$('#form3').hide();
+
+		$('#qtde_autor').change(function(){
+			var opcao = $(this).val()
+			switch(opcao){
+				case '1':
+					$('#form1').show();
+					$('#form2').hide();
+					$('#form3').hide();
+					break;
+				case '2':
+					$('#form1').show();
+					$('#form2').show();
+					$('#form3').hide();
+					break;
+				case '3':
+					$('#form1').show();
+					$('#form2').show();
+					$('#form3').show();
+					break;
+			}
+		});
+	});
+
+	$('#form1').on('submit', function(event){
+		event.preventDefault();
+		console.log('formulario enviado');
+		criar_post();
+	})
+
+</script>
+{% endblock%}
+
+{% block content %}
+<div>
+	<form>
+		<fieldset>
+			<label>Quantidade de autores:</label>
+			<select id="qtde_autor">
+				<option value='1'>1</option>
+				<option value='2'>2</option>
+				<option value='3'>3</option>
+			</select>
+		</fieldset>
+	</form>
+</div>
+<div id="form1">
+	<form method="post">
+		{% csrf_token %}
+		<fieldset>
+			{% for field in form %}
+			<div>
+				{{ field.label_tag }}
+	            {{ field }}
+	            {{ field.errors }}
+			</div>
+			{% endfor %}
+			<div class="pure-controls">
+			    <button type="submit">Cadastrar</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div id="form2">
+	<form method="post">
+		{% csrf_token %}
+		<fieldset>
+			{% for field in form %}
+			
+			<div>
+				{{ field.label_tag }}
+	            {{ field }}
+	            {{ field.errors }}
+			</div>
+
+			{% endfor %}
+			<div class="pure-controls">
+			    <button type="submit">Cadastrar</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<div id="form3">
+	<form method="post">
+		{% csrf_token %}
+		<fieldset>
+			{% for field in form %}
+			<div>
+				{{ field.label_tag }}
+	            {{ field }}
+	            {{ field.errors }}
+			</div>
+			{% endfor %}
+			<div class="pure-controls">
+			    <button type="submit">Cadastrar</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+{% endblock %}

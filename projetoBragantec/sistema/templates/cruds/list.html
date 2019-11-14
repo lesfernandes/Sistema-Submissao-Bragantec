@@ -7,7 +7,7 @@
 
 {% block thead %}
 	{% for field, field_name in fields.items %}
-	{% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' %}
+	{% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'titulo' and field != resumo and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas'%}
 
 		<th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
 	{% endif %}
@@ -19,7 +19,7 @@
 {% for object in object_list %}
 <tr>
   {% for field, field_name in fields.items %}
-  {% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' %}
+  {% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'titulo' and field != resumo and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas'%}
   <td class="td-field-{{ field|lower }} td-fieldtype-{{ field_name.1|lower }}">
     {% with column=field_name.1|lower|add:".html" %}
         {% include "cruds/columns/"|add:column %}
@@ -31,16 +31,17 @@
   <td>
     {% block actions %}
       {% crud_url object "detail" namespace as url %}
+        <a href="{{ url }}{{getparams}}" class="btn btn-success">{% trans "Aceitar" %}</a>
         {% if url and 'detail' in views_available and crud_perms.detail %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-success">{% trans "Mostrar" %}</a>
+        <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
         {% endif %}
         {% crud_url object "update" namespace as url %}
         {% if url and 'update' in views_available and crud_perms.update %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-primary">{% trans "Editar" %}</a>
+        <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Alterações" %}</a>
         {% endif %}
         {% crud_url object "delete" namespace as url %}
         {% if url and 'delete' in views_available and crud_perms.delete %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-danger">{% trans "Deletar" %}</a>
+        <a href="{{ url }}{{getparams}}" class="btn btn-danger">{% trans "Rejeitar" %}</a>
         {% endif %}
     {% endblock %}
   </td>

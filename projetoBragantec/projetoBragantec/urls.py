@@ -24,12 +24,12 @@ urlpatterns = [
     path('', include('sistema.urls')),
 ]
 
-custom_forms = { 'add_autor': RegisterForm}
-urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
-	views=['create'],
-	add_form=RegisterForm,
-	login_required=False)
-urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
-	views=['list'],
-	add_form=RegisterForm,
+urlpatterns += crud_for_model(
+	apps.get_model('sistema', 'Autor'), 
+	views=['list', 'detail', 'delete', 'update'],
+	login_required=True)
+
+urlpatterns += crud_for_model(
+	apps.get_model('sistema', 'Projeto'),
+	views=['delete', 'detail', 'update', 'list'], 
 	login_required=True)
