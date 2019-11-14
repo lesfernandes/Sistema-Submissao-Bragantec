@@ -11,8 +11,10 @@ class Autor(AbstractUser):
     curso = models.CharField('Curso', max_length=100,blank=True)
     serie = models.CharField('Série', max_length=100,blank=True)
     instituicao = models.CharField('Instituição', max_length=100)
+    username =  models.CharField(max_length=30, blank=True)
 
-    REQUIRED_FIELDS = ['name', 'tipo', 'instituicao', 'username']
+    REQUIRED_FIELDS = ['name', 'tipo', 'instituicao']
+
     USERNAME_FIELD = 'email'
 
     def __str__(self):
@@ -26,12 +28,19 @@ class Autor(AbstractUser):
         verbose_name_plural = "Autores"
 
 class Projeto(models.Model):
+    titulo = models.CharField(max_length=100, default=None)
     resumo = models.CharField(max_length=200)
     email = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     areas = [('CHL', 'Ciências Humanas e Linguagens'), ('CNE', 'Ciências da Natureza e Exatas'), ('I', 'Informática'), ('E', 'Engenharias')]
     area = models.CharField(choices=areas, max_length=100)
     palavras_chave = models.CharField(max_length=30)
-    plano_pesquisa = models.FileField(upload_to='uploads/')
+    introducao = models.CharField(max_length=500, default=None)
+    objetivos = models.CharField(max_length=500, default=None)
+    material = models.CharField(max_length=500, default=None)
+    metodologia = models.CharField(max_length=500, default=None)
+    resultados = models.CharField(max_length=500, default=None)
+    referencias_bibliograficas  = models.CharField(max_length=500, default=None)
+    plano_pesquisa = models.FileField(upload_to='uploads/', blank=True)
     link_video = models.CharField(max_length=100)
 
     class Meta:
