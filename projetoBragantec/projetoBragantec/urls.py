@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from cruds_adminlte.urls import crud_for_app
+from cruds_adminlte.urls import crud_for_model, crud_for_app
 from sistema.forms import RegisterForm
+from django.apps import apps
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,35 @@ urlpatterns = [
 ]
 
 custom_forms = { 'add_autor': RegisterForm}
-urlpatterns += crud_for_app('sistema',  views=['update', 'list'], login_required=True)
-urlpatterns += crud_for_app('sistema', modelforms=custom_forms, views=['create'], login_required=False)
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> 838cf19... mudança no formulario de cadastro
+=======
+>>>>>>> 838cf19... mudança no formulario de cadastro
+urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
+	views=['create'],
+	add_form=RegisterForm,
+	login_required=False)
+urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
+	views=['list'],
+	add_form=RegisterForm,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	login_required=True)
+urlpatterns += crud_for_model(
+	apps.get_model('sistema', 'Autor'), 
+	views=['list', 'detail', 'delete', 'update'],
+	login_required=True)
+
+urlpatterns += crud_for_model(
+	apps.get_model('sistema', 'Projeto'),
+	views=['delete', 'detail', 'update', 'list'], 
+	login_required=True)
+=======
+	login_required=True)
+>>>>>>> 838cf19... mudança no formulario de cadastro
+=======
+	login_required=True)
+>>>>>>> 838cf19... mudança no formulario de cadastro

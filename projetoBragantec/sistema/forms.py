@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
+from .models import Projeto
 
 User = get_user_model()
 
@@ -27,7 +28,19 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'tipo', 
+        fields = ['email', 'name', 'tipo', 
         'idade', 'curso', 'serie', 'instituicao']
 
-		
+
+
+class SubmitForm(forms.ModelForm):
+    resumo = forms.CharField(widget=forms.Textarea)
+    introducao = forms.CharField(widget=forms.Textarea)
+    objetivos = forms.CharField(widget=forms.Textarea)
+    material = forms.CharField(widget=forms.Textarea)
+    metodologia = forms.CharField(widget=forms.Textarea)
+    resultados = forms.CharField(widget=forms.Textarea)
+    referencias_bibliograficas = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Projeto
+        fields = '__all__'
