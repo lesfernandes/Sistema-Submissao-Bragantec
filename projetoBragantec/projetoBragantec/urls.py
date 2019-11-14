@@ -25,35 +25,13 @@ urlpatterns = [
 ]
 
 custom_forms = { 'add_autor': RegisterForm}
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 838cf19... mudança no formulario de cadastro
-=======
->>>>>>> 838cf19... mudança no formulario de cadastro
-urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
-	views=['create'],
-	add_form=RegisterForm,
-	login_required=False)
-urlpatterns += crud_for_model(apps.get_model('sistema', 'Autor'), 
-	views=['list'],
-	add_form=RegisterForm,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	login_required=True)
 urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Autor'), 
 	views=['list', 'detail', 'delete', 'update'],
 	login_required=True)
-
 urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Projeto'),
 	views=['delete', 'detail', 'update', 'list'], 
 	login_required=True)
-=======
-	login_required=True)
->>>>>>> 838cf19... mudança no formulario de cadastro
-=======
-	login_required=True)
->>>>>>> 838cf19... mudança no formulario de cadastro
+
