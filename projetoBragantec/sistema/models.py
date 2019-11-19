@@ -34,13 +34,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Autor(models.Model):
     email = models.EmailField('E-mail', unique=True)
-    name = models.CharField('Nome', max_length=100)
+    name = models.CharField('Nome', max_length=100, blank=True)
     tipos = [('E', 'Estudante'), ('O', 'Orientador')]
     tipo = models.CharField(choices=tipos, max_length=100, blank=True)
     idade = models.IntegerField('Idade', blank=True, default=None)
     curso = models.CharField('Curso', max_length=100,blank=True)
     serie = models.CharField('Série', max_length=100,blank=True)
-    instituicao = models.CharField('Instituição', max_length=100)
+    instituicao = models.CharField('Instituição', max_length=100, blank=True)
 
     def __str__(self):
         return self.email

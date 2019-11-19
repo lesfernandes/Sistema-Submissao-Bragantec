@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Projeto
+from .models import Projeto, Autor
 from django.contrib.auth import authenticate, login
-from .forms import RegisterForm, SubmitForm, AutorForm
+from .forms import SubmitForm, AutorForm
+import json
+from django.http import JsonResponse
 
 def index(request):
 	return render(request, 'index.html', {})
@@ -11,14 +13,36 @@ def dashboard(request):
 	return render(request, 'dashboard.html', {'projetos':projetos})
 
 def register(request):
-	if request.method == 'POST':
-		form = AutorForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			return redirect('submit_project')
-	else:
-		form = AutorForm()
-	return render(request, 'registration/register.html', {'form': form})
+	autores = Autor.objects.all()
+	response_data = {}
+
+	if request.POST.get('action') == 'post':
+
+		email = request.POST.get('email')
+		name = request.POST.get('name')
+		tipo = request.POST.get('tipo')
+		idade = request.POST.get('idade')
+		curso = request.POST.get('curso')
+		serie = request.POST.get('serie')
+		instituicao = request.POST.get('instituicao')
+
+		response_data['email'] = email
+		response_data['name'] = name
+		response_data['tipo'] = tipo
+		response_data['idade'] = idade
+		response_data['curso'] = curso
+		response_data['serie'] = serie
+		response_data['instituicao'] = instituicao
+
+		Autor.objects.create(email=email, 
+			name=name, tipo=tipo, 
+			idade=idade, curso=curso, 
+			serie=serie, instituicao=instituicao)
+
+		return JsonResponse(response_data)
+
+	form = AutorForm()
+	return render(request, 'registration/register.html', {'form': form, 'autores': autores})
 
 def submit_project(request):
 	if request.method == 'POST':
@@ -33,3 +57,5 @@ def submit_project(request):
 def confirm(request):
 	user = request.user
 	return render(request, 'registration/confirm.html', {'user': user})
+
+    

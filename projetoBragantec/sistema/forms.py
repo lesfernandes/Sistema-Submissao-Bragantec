@@ -5,7 +5,7 @@ from .models import Projeto, Autor
 
 User = get_user_model()
 
-class RegisterForm(forms.ModelForm):
+"""class RegisterForm(forms.ModelForm):
 
     password1 = forms.CharField(label='Senha', widget=forms.PasswordInput)
     password2 = forms.CharField(
@@ -28,12 +28,14 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username']"""
 
 class AutorForm(forms.ModelForm):
+
     class Meta:
         model = Autor
         fields = '__all__'
+
 
 class SubmitForm(forms.ModelForm):
     resumo = forms.CharField(widget=forms.Textarea)
