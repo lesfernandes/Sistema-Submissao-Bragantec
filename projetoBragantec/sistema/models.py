@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Autor(models.Model):
     email = models.EmailField('E-mail', unique=True)
-    name = models.CharField('Nome', max_length=100, blank=True)
+    nome = models.CharField('Nome', max_length=100, blank=True)
     tipos = [('E', 'Estudante'), ('O', 'Orientador')]
     tipo = models.CharField(choices=tipos, max_length=100, blank=True)
     idade = models.IntegerField('Idade', blank=True, default=None)

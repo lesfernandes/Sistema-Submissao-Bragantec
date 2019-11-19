@@ -37,20 +37,10 @@
 			$.ajax({
 				url: '{% url "register" %}',
 				type: 'POST',
-				data: {email: $('#id_email').val(),
-						name: $('#id_name').val(), 
-						tipo: $('#id_tipo').val(),
-						idade: $('#id_idade').val(),
-						curso: $('#id_curso').val(),
-						serie: $('#id_serie').val(),
-						instituicao: $('#id_instituicao').val(),
-						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-						action: 'post'
-				},
+				data: $("#form1").serializeArray(),
 				success : function(json) {
 					$("#form1").hide();
 					$("#success1").show();
-					
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -64,21 +54,10 @@
 			$.ajax({
 				url: '{% url "register" %}',
 				type: 'POST',
-				data: {email: $('#id_email').val(),
-						name: $('#id_name').val(), 
-						tipo: $('#id_tipo').val(),
-						idade: $('#id_idade').val(),
-						curso: $('#id_curso').val(),
-						serie: $('#id_serie').val(),
-						instituicao: $('#id_instituicao').val(),
-						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-						action: 'post'
-				},
+				data: $("#form2").serializeArray(),
 				success : function(json) {
-
 					$("#form2").hide();
 					$("#success2").show();
-					
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -92,16 +71,7 @@
 			$.ajax({
 				url: '{% url "register" %}',
 				type: 'POST',
-				data: {email: $('#id_email').val(),
-						name: $('#id_name').val(), 
-						tipo: $('#id_tipo').val(),
-						idade: $('#id_idade').val(),
-						curso: $('#id_curso').val(),
-						serie: $('#id_serie').val(),
-						instituicao: $('#id_instituicao').val(),
-						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-						action: 'post'
-				},
+				data: $("#form3").serializeArray(),
 				success : function(json) {
 					$("#form3").hide();
 					$("#success3").show();
@@ -130,10 +100,11 @@
 		</fieldset>
 	</form>
 </div>
-<div id="form1">
-	<form method="post">
-		{% csrf_token %}
+<div >
+	<form method="post" id="form1">
+		
 		<fieldset>
+			{% csrf_token %}
 			{% for field in form %}
 			<div>
 				{{ field.label_tag }}
@@ -150,12 +121,12 @@
 <div id='success1'>
 	<p>CADASTRADO COM SUCESSO!</p>
 </div>
-<div id="form2">
-	<form method="post">
-		{% csrf_token %}
+<div >
+	<form method="post" id="form2">
+		
 		<fieldset>
+			{% csrf_token %}
 			{% for field in form %}
-			
 			<div>
 				{{ field.label_tag }}
 	            {{ field }}
@@ -172,10 +143,11 @@
 <div id='success2'>
 	<p>CADASTRADO COM SUCESSO!</p>
 </div>
-<div id="form3">
-	<form method="post">
-		{% csrf_token %}
+<div >
+	<form method="post" id="form3">
+		
 		<fieldset>
+			{% csrf_token %}
 			{% for field in form %}
 			<div>
 				{{ field.label_tag }}
