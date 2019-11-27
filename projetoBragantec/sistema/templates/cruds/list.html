@@ -7,7 +7,7 @@
 
 {% block thead %}
 	{% for field, field_name in fields.items %}
-	{% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'titulo' and field != resumo and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas'%}
+	{% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
 
 		<th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
 	{% endif %}
@@ -19,7 +19,8 @@
 {% for object in object_list %}
 <tr>
   {% for field, field_name in fields.items %}
-  {% if field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'titulo' and field != resumo and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas'%}
+  {% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+
   <td class="td-field-{{ field|lower }} td-fieldtype-{{ field_name.1|lower }}">
     {% with column=field_name.1|lower|add:".html" %}
         {% include "cruds/columns/"|add:column %}
@@ -31,7 +32,7 @@
   <td>
     {% block actions %}
       {% crud_url object "detail" namespace as url %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-success">{% trans "Aceitar" %}</a>
+        <a href="{% url 'aceitar_submissao' %}" class="btn btn-success">{% trans "Aceitar" %}</a>
         {% if url and 'detail' in views_available and crud_perms.detail %}
         <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
         {% endif %}

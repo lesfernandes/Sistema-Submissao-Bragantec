@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['']
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.name or self.username
@@ -33,24 +33,45 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Usuários'
 
 class Autor(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     email = models.EmailField('E-mail', unique=True)
-    nome = models.CharField('Nome', max_length=100, blank=True)
-    tipos = [('E', 'Estudante'), ('O', 'Orientador')]
-    tipo = models.CharField(choices=tipos, max_length=100, blank=True)
-    idade = models.IntegerField('Idade', blank=True, default=None)
+    nome = models.CharField('Nome', max_length=100)
+    dt_nasc = models.DateField('Data de Nascimento', default=None, help_text='Por favor use o seguinte formato: YYYY-MM-DD')
     curso = models.CharField('Curso', max_length=100,blank=True)
     serie = models.CharField('Série', max_length=100,blank=True)
-    instituicao = models.CharField('Instituição', max_length=100, blank=True)
-
+    instituicao = models.CharField('Instituição', max_length=100)
+    objects = UserManager()
     def __str__(self):
         return self.email
 
-    def get_name(self):
-        return self.name
+    def get_nome(self):
+        return self.nome
+
+    def get_email(self, user_id):
+        if user_id == self.user:
+            return self.email
 
     class Meta:
         verbose_name = "Autor"
         verbose_name_plural = "Autores"
+
+class Orientador(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    email = models.EmailField('E-mail', unique=True)
+    nome = models.CharField('Nome', max_length=100)
+    instituicao = models.CharField('Instituição', max_length=100)
+    objects = UserManager()
+    def __str__(self):
+        return self.email
+
+    def get_email(self, user_id):
+        if user_id == self.user:
+            return self.email
+
+    class Meta:
+        verbose_name = 'Orientador'
+        verbose_name_plural = 'Orientadores'
+
 
 class Projeto(models.Model):
     titulo = models.CharField(max_length=100, default=None)
@@ -66,6 +87,13 @@ class Projeto(models.Model):
     referencias_bibliograficas  = models.CharField(max_length=500, default=None)
     plano_pesquisa = models.FileField(upload_to='uploads/', blank=True)
     link_video = models.CharField(max_length=100)
+    email_autor_1 = models.EmailField(max_length=100, default=None, blank=True)
+    email_autor_2 = models.EmailField(max_length=100, default=None, blank=True)
+    email_autor_3 = models.EmailField(max_length=100, default=None, blank=True)
+    email_orientador_1 = models.EmailField(max_length=100, default=None, blank=True)
+    email_orientador_2 = models.EmailField(max_length=100, default=None, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    alteracoes = models.CharField(max_length=500, default=None, blank=True)
 
     class Meta:
         verbose_name = "Projeto"

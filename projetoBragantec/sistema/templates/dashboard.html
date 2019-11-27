@@ -1,5 +1,10 @@
 {% extends "cruds/base.html" %}
 
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock css %}
+
 {% block title_outer %}
 	<title>
 		{% block title %} 
@@ -9,6 +14,7 @@
 {% endblock %}
 
 {% block body %}
+
 	{% block nav_header %}
         {% include 'adminlte/lib/_main_header.html' %}
     {% endblock %}
@@ -16,5 +22,39 @@
     {% block nav_sidebar %}
         {% include 'adminlte/lib/_main_sidebar.html' %}
     {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+    	{% block content-header %}
+    	<section class="content-header">
+    		<div class='breadcrumbs'>
+	    		<ul>
+		    		{% block breadcrumbs %}
+		            <li><a href="{% url 'dashboard' %}">Meu Dashboard</a></li>
+		            {% endblock %}
+		        </ul>
+		    </div>
+   		</section>
+    	{% endblock content-header %}
+
+    	{% block content_outer %}
+	        <section class="content">
+	            {% block messages %}
+	                {% include 'adminlte/lib/_messages.html' %}
+	            {% endblock %}
+
+	            {% block content_block_wrap %}
+	                {% block content %}{% endblock %}
+	            {% endblock %}
+	        </section>
+    	{% endblock %}
+    	
+    </div>
+
+    {% block nav_footer %}
+        {% include 'adminlte/lib/_main_footer.html' %}
+    {% endblock %}
+    
+    {% endblock content-wrapper%}
 
 {% endblock %}

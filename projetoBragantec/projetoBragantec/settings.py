@@ -147,9 +147,11 @@ THUMBNAIL_PROCESSORS = (
 TIME_FORMAT= 'h:i A'
 DATETIME_FORMAT='d/m/Y H:i:s'
 DATE_FORMAT="d/m/Y"
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
 TIME_INPUT_FORMATS = ['%I:%M %p']
 
 AUTH_USER_MODEL = 'sistema.User'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'

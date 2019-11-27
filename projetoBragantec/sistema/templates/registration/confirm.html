@@ -1,6 +1,78 @@
-{% extends "base_initial.html" %}
-{% block content %}
-<h1>ETAPA 3/3</h1>
-<p style="color: black">{{user.name}}</p>
-<a href="{% url 'dashboard' %}" style="color: black">Confirmar</a>
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+
+{% block title_outer %}
+	<title>
+		{% block title %} 
+			Confirmar Submissão
+		{% endblock %}
+	</title>
 {% endblock %}
+
+<div>
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+    	{% block content-header %}
+    	<section class="content-header">
+    		<div class="breadcrumbs">
+    			<ul>
+    				{% block breadcrumbs %}
+			    		{{ block.super }}
+			    		<li>/</li>
+			    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'submit_project' %}">Projeto</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'confirm' %}">Confirmar Submissão</a></li>
+			    	{% endblock breadcrumbs %}
+    			</ul>
+    		</div>
+    		
+    	</section>
+    	{% endblock content-header%}
+    	{% block content-outer %}
+    	<section>
+    		<div class="content">
+    			<div class="row">
+				    <div class="col-md-8 col-md-offset-2">
+				        <div class="box">
+				            <div class="box-header with-border">
+				                <h3 class="box-title">Confirmar Submissão</h3>
+				            </div>
+
+				            <div class="box-body">
+				                <div class="table-responsive">
+				                    <table class="table">
+				                        <thead>
+				                            <th>{{projeto.titulo}}</th><th>VALUE</th>
+				                        </thead>
+				                        <tbody>
+				                            ISSO AI
+				                        </tbody>
+				                    </table>
+				                </div>
+				            </div>
+				            {% endif %}
+				        </div>
+				    </div>
+				</div>
+			</div>
+		</section>
+		<div>
+			<a href="{% url 'dashboard' %}">Confirmar</a>
+		</div>
+		{%endblock content-outer%}
+	{% endblock %}
+</div>
+

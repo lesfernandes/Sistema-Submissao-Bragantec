@@ -4,45 +4,36 @@
 {% block js %}
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#form2').hide();
-		$('#form3').hide();	
+		$('#form5').hide();	
 
-		$('#success1').hide();
-		$('#success2').hide();
-		$('#success3').hide();
+		$('#success4').hide();
+		$('#success5').hide();
 
-		$('#qtde_autor').change(function(){
+		$('#qtde_orientador').change(function(){
 			var opcao = $(this).val();
 			switch(opcao){
 				case '1':
-					$('#form1').show();
-					$('#form2').hide();
-					$('#form3').hide();
+					$('#form4').show();
+					$('#form5').hide();
 					break;
+
 				case '2':
-					$('#form1').show();
-					$('#form2').show();
-					$('#form3').hide();
-					break;
-				case '3':
-					$('#form1').show();
-					$('#form2').show();
-					$('#form3').show();
+					$('#form4').show();
+					$('#form5').show();
 					break;
 			}
 		});
 
-		
-		$('#form1').on('submit', function(event){
+		$('#form4').on('submit', function(event){
 			event.preventDefault();
 
 			$.ajax({
-				url: '{% url "register_autor" %}',
+				url: '{% url "register_orientador" %}',
 				type: 'POST',
-				data: $("#form1").serializeArray(),
+				data: $("#form4").serializeArray(),
 				success : function(json) {
-					$("#form1").hide();
-					$("#success1").show();
+					$("#form4").hide();
+					$("#success4").show();
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -50,16 +41,16 @@
 			});
 		});
 
-		$('#form2').on('submit', function(event){
+		$('#form5').on('submit', function(event){
 			event.preventDefault();
 
 			$.ajax({
-				url: '{% url "register_autor" %}',
+				url: '{% url "register_orientador" %}',
 				type: 'POST',
-				data: $("#form2").serializeArray(),
+				data: $("#form5").serializeArray(),
 				success : function(json) {
-					$("#form2").hide();
-					$("#success2").show();
+					$("#form5").hide();
+					$("#success5").show();
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -67,36 +58,18 @@
 			});
 		});
 
-		$('#form3').on('submit', function(event){
-			event.preventDefault();
-		
-			$.ajax({
-				url: '{% url "register_autor" %}',
-				type: 'POST',
-				data: $("#form3").serializeArray(),
-				success : function(json) {
-					$("#form3").hide();
-					$("#success3").show();
-	        	},
-	        	error : function(xhr,errmsg,err) {
-	            	console.log(xhr.status + ": " + xhr.responseText);           
-	        	}
-			});
-		});
 	});
-
 </script>
 {% endblock js %}
 
 {% block title_outer %}
 	<title>
 		{% block title %} 
-			Autores
+			Orientadores
 		{% endblock %}
 	</title>
 {% endblock %}
 
-{% block body %}
 <div>
 	{% block nav_header %}
         {% include 'adminlte/lib/_main_header.html' %}
@@ -116,6 +89,8 @@
 			    		{{ block.super }}
 			    		<li>/</li>
 			    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
 			    	{% endblock breadcrumbs %}
     			</ul>
     		</div>
@@ -125,20 +100,19 @@
 
     	{% block content-outer %}
     	<section>
-    		<div class="content" id="qtdeAutor">
+    		<div class="content" id="qtdeOrientador">
 				<form>
-					<label>Quantidade de autores:</label>
-					<select id="qtde_autor">
+					<label>Quantidade de orientadores:</label>
+					<select id="qtde_orientador">
 						<option value='1'>1</option>
 						<option value='2'>2</option>
-						<option value='3'>3</option>
-					</select>					
+					</select>				
 				</form>
 			</div>
 			<div class="content">
-				<form method="post" id="form1">
+				<form method="post" id="form4">
 					<fieldset>
-						<legend>Autor 1</legend>
+						<legend>Orientador</legend>
 						{% csrf_token %}
 						{% for field in form %}
 						<div>
@@ -153,35 +127,13 @@
 					</fieldset>
 				</form>
 			</div>
-			<div id='success1' class="content">
+			<div id='success4' class="content">
 				<p>CADASTRADO COM SUCESSO!</p>
 			</div>
 			<div class="content">
-				<form method="post" id="form2">
+				<form method="post" id="form5">
 					<fieldset>
-						<legend>Autor 2</legend>
-						{% csrf_token %}
-						{% for field in form %}
-						<div>
-							{{ field.label_tag }}
-				            {{ field }}
-				            {{ field.errors }}
-						</div>
-
-						{% endfor %}
-						<div class="pure-controls">
-						    <button type="submit">Cadastrar</button>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div id='success2' class="content">
-				<p>CADASTRADO COM SUCESSO!</p>
-			</div>
-			<div class="content">
-				<form method="post" id="form3">
-					<fieldset>
-						<legend>Autor 3</legend>
+						<legend>Coorientador</legend>
 						{% csrf_token %}
 						{% for field in form %}
 						<div>
@@ -196,16 +148,18 @@
 					</fieldset>
 				</form>
 			</div>
-			<div id='success3' class="content">
+			<div id='success5' class="content">
 				<p>CADASTRADO COM SUCESSO!</p>
 			</div>
 			<div class="content">
-				<a href='{% url "register_orientador" %}' style="color: black;">Próximo</a>
+				<a href='{% url "register_autor" %}' style="color: black">Anterior</a>
+				<a href='{% url "submit_project" %}' style="color: black;">Próximo</a>
 			</div>
-		</section>
-		{% endblock content-outer %}
-	</div>
-	{% endblock content-wrapper %}
-
+    	</section>
+    	{% endblock content-outer %}
+    </div>
+   	{% endblock content-wrapper %}
 </div>
-{% endblock body %}
+
+
+

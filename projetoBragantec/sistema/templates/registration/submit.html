@@ -1,20 +1,64 @@
-{% extends "base_initial.html" %}
-{% block content %}
-<h1>ETAPA 2/3</h1>
-<form method="post">
-	{% csrf_token %}
-	<fieldset>
-		{% for field in form %}
-		<div>
-			{{ field.label_tag }}
-            {{ field }}
-            {{ field.errors }}
-		</div>
-		{% endfor %}
-		<div class="pure-controls">
-            <button type="submit">Cadastrar</button>
-        </div>
-</fieldset>
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% crispy form %}
 
-</form>
+{% block title_outer %}
+	<title>
+		{% block title %} 
+			Projeto
+		{% endblock %}
+	</title>
 {% endblock %}
+
+<div>
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+    	{% block content-header %}
+    	<section class="content-header">
+    		<div class="breadcrumbs">
+    			<ul>
+    				{% block breadcrumbs %}
+			    		{{ block.super }}
+			    		<li>/</li>
+			    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
+			    		<li>/</li>
+			    		<li><a href="{% url 'submit_project' %}">Projeto</a></li>
+			    	{% endblock breadcrumbs %}
+    			</ul>
+    		</div>
+    		
+    	</section>
+    	{% endblock content-header%}
+    	{% block content-outer %}
+    	<section>
+    		<div class="content">
+				<form method="post">
+					{% csrf_token %}
+					<fieldset>
+						{% for field in form %}
+						<div>
+							{{ field.label_tag }}
+				            {{ field }}
+				            {{ field.errors }}
+						</div>
+						{% endfor %}
+						<div class="pure-controls">
+				            <button type="submit">Cadastrar</button>
+				        </div>
+				</fieldset>
+				</form>
+			</div>
+		</section>
+		{%endblock content-outer%}
+	{% endblock %}
+</div>

@@ -10,15 +10,15 @@ Menu
 	        <i class="fa fa-pencil"></i>Projetos submetidos
 	    </a>
 	</li>
-	<li>
+	<!--<li>
 	    <a href="{% url 'sistema_autor_list' %}">
 	        <i class="fa fa-pencil"></i>Autores Cadastrados
 	    </a>
-	</li>
+	</li>-->
 	{% else %}
 	<li>
-	    <a href="{% url 'sistema_projeto_list' %}">
-	        <i class="fa fa-pencil"></i>Meus projetos
+	    <a href="{% url 'register_autor' %}">
+	        <i class="fa fa-pencil"></i>Submeter Projeto
 	    </a>
 	</li>
 	{% endif %}
