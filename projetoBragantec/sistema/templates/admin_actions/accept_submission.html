@@ -1,0 +1,37 @@
+{% extends "dashboard.html" %}
+
+{% block body %}
+
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+  	<h1>Aceitar o projeto '{{ projeto.titulo }}'?</h1>
+
+	<form action="{% url 'accept_submission' projeto.id %}" method="POST">
+	    {% csrf_token %}
+	    <p>
+	    	<input type="hidden" name="status" id="id_status" value="A">
+	    </p>
+		<p>
+	    	<button type="submit" class="btn btn-success">Aceitar</button>
+	    </p>
+	</form>
+
+	
+
+    {% block nav_footer %}
+        {% include 'adminlte/lib/_main_footer.html' %}
+    {% endblock %}
+    
+    {% endblock content-wrapper %}
+	</div>
+
+{% endblock %}
+

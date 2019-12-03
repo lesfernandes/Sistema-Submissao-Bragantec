@@ -13,7 +13,7 @@
 <li class="user-header">
     <img src="{% avatar_url size=180 %}" class="img-circle" alt="User Image">
     <p>
-        {% firstof request.user.get_name %}
+        {{ request.user }}
     </p>
 </li>
 {% endblock %}

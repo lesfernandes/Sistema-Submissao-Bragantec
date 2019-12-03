@@ -54,4 +54,27 @@ class SubmitForm(forms.ModelForm):
     class Meta:
         model = Projeto
         exclude = ['email_autor_1', 'email_autor_2', 
-        'email_autor_3', 'email_orientador_1', 'email_orientador_2', 'user', 'alteracoes']
+        'email_autor_3', 'email_orientador_1', 'email_orientador_2', 'user', 'alteracoes', 'status']
+
+
+class AlteracoesForm(forms.ModelForm):
+    titulo = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    resumo = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    palavras_chave = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    introducao = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    objetivos = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    material = forms.CharField(widget=forms.Textarea(attrs={'readonly': 'readonly'}))
+    metodologia = forms.CharField(widget=forms.Textarea(attrs={'readonly':'readonly'}))
+    resultados = forms.CharField(widget=forms.Textarea(attrs={'readonly':'readonly'}))
+    referencias_bibliograficas = forms.CharField(widget=forms.Textarea(attrs={'readonly':'readonly'}))
+    link_video = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    email_autor_1 = forms.EmailField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required=False)
+    email_autor_2 = forms.EmailField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required=False)
+    email_autor_3 = forms.EmailField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required=False)
+    email_orientador_1 = forms.EmailField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required=False)
+    email_orientador_2 = forms.EmailField(widget=forms.TextInput(attrs={'readonly':'readonly'}), required=False)
+    alteracoes = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Projeto
+        exclude = ['user', 'plano_pesquisa']

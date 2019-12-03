@@ -1,0 +1,33 @@
+{% extends "dashboard.html" %}
+
+{% block body %}
+
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content %}
+  	<h1>Rejeitar o projeto '{{ projeto.titulo }}'?</h1>
+
+	<form action="{% url 'reject_submission' projeto.id %}" method="POST">
+	    {% csrf_token %}
+	    <p>
+	    	<input type="hidden" name="status" id="id_status" value="R">
+	    </p>
+		<p>
+	    	<button type="submit" class="btn btn-danger">Rejeitar</button>
+	    </p>
+	</form>
+
+	{% endblock %}
+
+    {% block nav_footer %}
+        {% include 'adminlte/lib/_main_footer.html' %}
+    {% endblock %}
+
+{% endblock %}
+

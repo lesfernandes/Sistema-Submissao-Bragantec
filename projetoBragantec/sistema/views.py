@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Projeto, Autor, User, Orientador
 from django.contrib.auth import authenticate, login, get_user_model
 from .forms import SubmitForm, AutorForm, RegisterForm, OrientadorForm
@@ -6,6 +6,10 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from cruds_adminlte.crud import CRUDView
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 User = get_user_model()
 
@@ -35,7 +39,10 @@ def register_user(request):
 @csrf_exempt
 def register_autor(request):
 	autores = Autor.objects.all()
+	projetos = Projeto.objects.all()
 	response_data = {}
+
+
 
 	if request.method == 'POST':
 		data = request.POST
@@ -141,3 +148,62 @@ def register_orientador(request):
 		return JsonResponse(response_data)
 	form = OrientadorForm()
 	return render(request, 'registration/register_orientador.html', {'form': form})
+
+@login_required
+def accept_submission(request, pk):
+	projeto = get_object_or_404(Projeto.objects.all(), pk=pk)
+	if request.method == 'POST':
+		data = request.POST
+		projeto.status = data['status']
+		projeto.pk = pk
+		projeto.save()
+		return redirect('sistema_projeto_list')
+	return render(request, 'admin_actions/accept_submission.html', {'projeto':projeto})
+
+@login_required
+def reject_submission(request, pk):
+	projeto = get_object_or_404(Projeto.objects.all(), pk=pk)
+	if request.method == 'POST':
+		data = request.POST
+		projeto.status = data['status']
+		projeto.pk = pk
+		projeto.save()
+		return redirect('sistema_projeto_list')
+	return render(request, 'admin_actions/reject_submission.html', {'projeto':projeto})
+
+def generate_pdf(request):
+	if request.method == 'POST':
+		data = request.POST
+		buffer1 = io.BytesIO()
+		p = canvas.Canvas(buffer1)
+		x = 720
+		for campo in data:
+			if campo != 'csrfmiddlewaretoken':
+				p.drawString(100, x, '{}: {}'.format(campo, data[campo]))
+				x-=20
+			else:
+				pass
+
+		p.showPage()
+
+		p.save()
+
+		buffer1.seek(0)
+
+		return FileResponse(buffer1, as_attachment=True, filename='projeto.pdf')
+	"""p.drawString(247, 720, "Título: {}".format(projeto.titulo))
+	p.drawString(100, 700, "Resumo: {}".format(projeto.resumo))
+	p.drawString(100, 680, "Área: {}".format(projeto.area))
+	p.drawString(100, 660, "Palavras-Chave: {}".format(projeto.palavras_chave))
+	p.drawString(100, 640, "Introdução: {}".format(projeto.introducao))
+	p.drawString(100, 620,"Objetivos: {}".format(projeto.objetivos))
+	p.drawString(100, 600, "Material: {}".format(projeto.material))
+	p.drawString(100, 580, "Metodologia: {}".format(projeto.metodologia))
+	p.drawString(100, 560, "Resultados: {}".format(projeto.resultados))
+	p.drawString(100, 540, "Referências Bibliográficas: {}".format(projeto.referencias_bibliograficas))
+	p.drawString(100, 520, "Link Vídeo: {}".format(projeto.link_video))"""
+
+def download_pdf(request, pk):
+	projeto = get_object_or_404(Projeto.objects.all(), pk=pk)
+
+	return render(request, 'admin_actions/download_pdf.html', {'projeto': projeto})

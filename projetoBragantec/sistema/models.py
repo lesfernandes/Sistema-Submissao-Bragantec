@@ -86,14 +86,16 @@ class Projeto(models.Model):
     resultados = models.CharField(max_length=500, default=None)
     referencias_bibliograficas  = models.CharField(max_length=500, default=None)
     plano_pesquisa = models.FileField(upload_to='uploads/', blank=True)
-    link_video = models.CharField(max_length=100)
-    email_autor_1 = models.EmailField(max_length=100, default=None, blank=True)
-    email_autor_2 = models.EmailField(max_length=100, default=None, blank=True)
-    email_autor_3 = models.EmailField(max_length=100, default=None, blank=True)
-    email_orientador_1 = models.EmailField(max_length=100, default=None, blank=True)
-    email_orientador_2 = models.EmailField(max_length=100, default=None, blank=True)
+    link_video = models.URLField(max_length=100)
+    email_autor_1 = models.EmailField(max_length=100, default=None, blank=True, null=True)
+    email_autor_2 = models.EmailField(max_length=100, default=None, blank=True, null=True)
+    email_autor_3 = models.EmailField(max_length=100, default=None, blank=True, null=True)
+    email_orientador_1 = models.EmailField(max_length=100, default=None, blank=True, null=True)
+    email_orientador_2 = models.EmailField(max_length=100, default=None, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
-    alteracoes = models.CharField(max_length=500, default=None, blank=True)
+    alteracoes = models.CharField(max_length=500, default=None, blank=True, null=True)
+    opcoes = [('AA', 'Aguardando Avaliação'), ('R', 'Rejeitado'), ('A', 'Aceito')]
+    status = models.CharField(max_length=100, default=opcoes[0][1], choices=opcoes)
 
     class Meta:
         verbose_name = "Projeto"

@@ -1,0 +1,128 @@
+{% extends "dashboard.html" %}
+
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#all").change(function(){
+    		$('input:checkbox').prop('checked', $(this).prop('checked'));
+		});
+
+	});
+</script>
+{% endblock js%}
+
+{% block body %}
+
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+
+    	<h2 style="margin-top: 0px; text-align: center;">Selecione os campos para gerar o PDF: </h2>
+    	<form method="post" action="{% url 'generate_pdf' %}">
+    	{% csrf_token %}
+    	<table class="table table-responsive table-bordered table-hover">
+    		<thead>
+    			<th><input type="checkbox" name="all" id="all"></th>
+    			<th>Campo</th>
+    			<th>Valor</th>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td><input type="checkbox" name="titulo" value="{{ projeto.titulo }}"></td>
+    				<td>Título</td>
+    				<td>{{ projeto.titulo }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="resumo" value="{{ projeto.resumo }}"></td>
+    				<td>Resumo</td>
+    				<td>{{ projeto.resumo }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="area" value="{{ projeto.area }}"></td>
+    				<td>Área</td>
+    				<td>{{ projeto.area }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="palavras_chave" value="{{ projeto.palavras_chave}}"></td>
+    				<td>Palavras Chave</td>
+    				<td>{{ projeto.palavras_chave }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="introducao" value="{{ projeto.introducao }}"></td>
+    				<td>Introdução</td>
+    				<td>{{ projeto.introducao }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="objetivos" value="{{ projeto.objetivos }}"></td>
+    				<td>Objetivos</td>
+    				<td>{{ projeto.ojetivos }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="material" value="{{ projeto.material }}"></td>
+    				<td>Material</td>
+    				<td>{{ projeto.material }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="metodologia" value="{{ projeto.metodologia }}"></td>
+    				<td>Metodologia</td>
+    				<td>{{ projeto.metodologia }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="resultados" value="{{ projeto.resultados }}"></td>
+    				<td>Resultados</td>
+    				<td>{{ projeto.resultados }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="referencias_bibliograficas" value="{{ projeto.referencias_bibliograficas }}"></td>
+    				<td>Referências Bibliogréficas</td>
+    				<td>{{ projeto.referencias_bibliograficas }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="link_video" value="{{ projeto.link_video }}"></td>
+    				<td>Link do Vídeo</td>
+    				<td>{{ projeto.link_video }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_1" value="{{ projeto.email_autor_1 }}"></td>
+    				<td>Email Autor 1</td>
+    				<td>{{ projeto.email_autor_1 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_2" value="{{ projeto.email_autor_2 }}"></td>
+    				<td>Email Autor 2</td>
+    				<td>{{ projeto.email_autor_2 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_3" value="{{ projeto.email_autor_3 }}"></td>
+    				<td>Email Autor 3</td>
+    				<td>{{ projeto.email_autor_3 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_orientador_1" value="{{ projeto.email_orientador_1 }}"></td>
+    				<td>Email Orientador 1</td>
+    				<td>{{ projeto.email_orientador_1 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_orientador_2" value="{{ projeto.email_orientador_2}}"></td>
+    				<td>Email Orientador 2</td>
+    				<td>{{ projeto.email_orientador_2 }}</td>
+    			</tr>
+    		</tbody>
+    	</table>
+    		<input type="submit" value="Baixar">
+    	</form>
+    	
+  		
+	{% endblock %}
+	
+    </div>
+
+{% endblock %}
+

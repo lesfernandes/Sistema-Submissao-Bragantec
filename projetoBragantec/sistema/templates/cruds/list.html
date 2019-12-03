@@ -2,50 +2,165 @@
 {% load i18n %}
 {% load crud_tags %}
 
-{% block title %}Lista de {{ model_verbose_name_plural }}{% endblock %}
-{% block page_description %}{% if blocks.page_description %}{{ blocks.page_description }}{% else %}{% trans "Lista de" %} {{ model_verbose_name_plural|lower }}{% endif %}{% endblock %}
+{% block title %}Lista de {{ model_verbose_name_plural|lower }}{% endblock %}
 
-{% block thead %}
-	{% for field, field_name in fields.items %}
-	{% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="row">
+                        {% if url_create %}
+                        <div class="col-lg-6">
+                            {% crud_url object "create" namespace as url %}
+                            {% if url and 'create' in views_available and crud_perms.create %}
+                              <a href="{{ url }}{{getparams}}" class="btn btn-primary">
+                                  {% trans "Create new " %} {{ model_verbose_name|lower }}</a>
+                            {%endif%}
+                        </div>
+                        {% endif %}
+                        {% if search %}
+                        <div class="col-lg-6">
+                            <form action="" method="get">
+                                <div class="input-group">
+                                    <input type="text" name="q" value="{{q}}" class="form-control" placeholder="{% trans 'Search for...' %}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-flat" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
 
-		<th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
-	{% endif %}
-	{% endfor %}
-	<th>{% trans "Ações" %}</th>
-{% endblock thead %}
+                    {% if filters %}
+                    <br />
 
-{% block tbody %}
-{% for object in object_list %}
-<tr>
-  {% for field, field_name in fields.items %}
-  {% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+                    <div class="box box-warning collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{% trans 'Filters' %}</h3>
+                            <div class="box-tools pull-right">
+                                <button data-widget="collapse" class="btn btn-box-tool btn-success" type="button">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- /.box-tools -->
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="">
+                            <form action="" method="get">
+                                <table class="table">
+                                    {% for filter in filters %}
+                                    {{filter.render }}
+                                    {% endfor %}
+                                </table>
+                                <input type="submit" class="btn btn-info" value="{% trans 'Filter' %}" />
+                                <a  class="btn btn-warning" href="?"> {% trans 'Clean filter' %} </a>
+                            </form>
+                        </div>
+                    </div>               
+                </div>
+                {% endif%}
+                <!-- /.box-body -->
+            </div>
+            <div class="box-body">
+                <table id="datatable" class="table table-bordered table-hover">
+                <div class="box-body">
+                    {% if paginate_position == 'Up' or paginate_position == 'Both' %}
+                        {% include paginate_template %}
+                    {% endif %}
+                    <table id="datatable" class="table table-responsive table-bordered table-hover">
+                    {% if object_list %}
+                        <thead>
+                            {% block thead %}
+                              {% for field, field_name in fields.items %}
+                                {% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+                                <th class="th-field-{{ field|lower }} th-fieldtype-{{ field_name.1|lower }}">{{ field_name.0 }}</th>
+                                {% endif %}
+                              {% endfor %}
+                            <th>{% trans "Ações" %}</th>
+                            {% endblock thead %}
+                        </thead>
+                        <tbody>
+                            {% block tbody %}
+                                {% if request.user.is_staff %}
+                                    {% for object in object_list %}
+                                        <tr>
+                                            {% for field, field_name in fields.items %}
+                                                {% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+                                                <td class="td-field-{{ field|lower }} td-fieldtype-{{ field_name.1|lower }}">
+                                                    {% with column=field_name.1|lower|add:".html" %}
+                                                        {% include "cruds/columns/"|add:column %}
+                                                    {% endwith %}
+                                                    {# typefield #}
+                                                </td>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <td>
+                                                {% block actions %}
+                                                    <a href="{% url 'accept_submission' object.id %}" class="btn btn-success">{% trans "Aceitar" %}</a>
+                                                    <a href="{% url 'reject_submission' object.id %}" class="btn btn-danger">{% trans "Rejeitar" %}</a>
 
-  <td class="td-field-{{ field|lower }} td-fieldtype-{{ field_name.1|lower }}">
-    {% with column=field_name.1|lower|add:".html" %}
-        {% include "cruds/columns/"|add:column %}
-    {% endwith %}
-    {# typefield #}
-  </td>
-  {% endif %}
-  {% endfor %}
-  <td>
-    {% block actions %}
-      {% crud_url object "detail" namespace as url %}
-        <a href="{% url 'aceitar_submissao' %}" class="btn btn-success">{% trans "Aceitar" %}</a>
-        {% if url and 'detail' in views_available and crud_perms.detail %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
-        {% endif %}
-        {% crud_url object "update" namespace as url %}
-        {% if url and 'update' in views_available and crud_perms.update %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Alterações" %}</a>
-        {% endif %}
-        {% crud_url object "delete" namespace as url %}
-        {% if url and 'delete' in views_available and crud_perms.delete %}
-        <a href="{{ url }}{{getparams}}" class="btn btn-danger">{% trans "Rejeitar" %}</a>
-        {% endif %}
-    {% endblock %}
-  </td>
-</tr>
-{% endfor %}
-{% endblock tbody %}
+                                                    {% crud_url object "detail" namespace as url %}
+                                                    {% if url and 'detail' in views_available and crud_perms.detail %}
+                                                        <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
+                                                    {% endif %}
+
+                                                    {% crud_url object "update" namespace as url %}
+                                                    {% if url and 'update' in views_available and crud_perms.update %}
+                                                        <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Alterações" %}</a>
+                                                    {% endif %}
+
+                                                    <a href="{% url 'download_pdf' object.id %}" class="btn btn-primary">{% trans "Baixar" %}</a>
+                                                {% endblock %}
+                                            </td>
+                                        </tr>
+                                {% endfor %}
+                                {% else %}
+                                    {% for object in object_list %}
+                                        {% if request.user.id is object.user_id %}
+                                            <tr>
+                                                {% for field, field_name in fields.items %}
+                                                    {% if field != 'id' and field  != 'password' and field != 'first_name' and field != 'last_login' and field != 'is_superuser' and field != 'username' and field != 'last_name' and field != 'is_staff' and field != 'is_active' and field != 'date_joined' and field != 'resumo' and field != 'palavras_chave' and field != 'introducao' and field != 'objetivos' and field != 'material' and field != 'metodologia' and field != 'resultados' and field != 'referencias_bibliograficas' and field != 'user' and field != 'email_autor_1' and field != 'email_autor_2' and field != 'email_autor_3' and field != 'email_orientador_1' and field != 'email_orientador_2'%}
+                                                    <td class="td-field-{{ field|lower }} td-fieldtype-{{ field_name.1|lower }}">
+                                                        {% with column=field_name.1|lower|add:".html" %}
+                                                            {% include "cruds/columns/"|add:column %}
+                                                        {% endwith %}
+                                                        {# typefield #}
+                                                    </td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <td>
+                                                    {% crud_url object "detail" namespace as url %}
+                                                    {% if url and 'detail' in views_available and crud_perms.detail %}
+                                                        <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
+                                                    {% endif %}
+
+                                                    {% crud_url object "update" namespace as url %}
+                                                    {% if url and 'update' in views_available and crud_perms.update %}
+                                                        <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Editar Submissão" %}</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                          {% endblock tbody %}
+                        </tbody>
+                    {% else %}
+                      <thead><th></th></thead>
+                      <tbody><tr><td>{% trans "Nenhuma submissão foi encontrada." %}</td></tr></tbody>
+                    {% endif %}
+                    </table>
+                    {% if paginate_position == 'Bottom' or paginate_position == 'Both' %}
+                        {% include paginate_template %}
+                    {% endif %}
+                </div>
+                <div class="box-footer"></div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from cruds_adminlte.urls import crud_for_model, crud_for_app
-#from sistema.forms import RegisterForm
 from django.apps import apps
+from sistema.forms import AlteracoesForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sistema.urls')),
 ]
-
-#custom_forms = { 'add_autor': RegisterForm}
 
 urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Autor'), 
@@ -33,6 +31,7 @@ urlpatterns += crud_for_model(
 
 urlpatterns += crud_for_model(
 	apps.get_model('sistema', 'Projeto'),
-	views=['delete', 'detail', 'update', 'list'], 
-	login_required=True)
+	views=['delete', 'detail', 'list', 'update'], 
+	login_required=True,
+    update_form = AlteracoesForm)
 
