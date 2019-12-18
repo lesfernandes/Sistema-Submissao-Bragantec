@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
+from django.contrib.auth.models import (AbstractUser,
     UserManager)
 from django.conf import settings
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractUser):
 
     username = models.CharField(
         'Nome de Usuário', max_length=30, unique=True
@@ -13,6 +13,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('Está ativo?', blank=True, default=True)
     is_staff = models.BooleanField('É da equipe?', blank=True, default=False)
     date_joined = models.DateTimeField('Data de Entrada', auto_now_add=True)
+    is_avaliador = models.BooleanField('É avaliador?', blank=True, default=False)
+    is_diretor = models.BooleanField('É Diretor?', blank=True, default=False)
 
     objects = UserManager()
 
@@ -100,3 +102,34 @@ class Projeto(models.Model):
     class Meta:
         verbose_name = "Projeto"
         verbose_name_plural = "Projetos"
+
+class Avaliador(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    nome = models.CharField('Nome', max_length=100)
+    link_curriculo = models.URLField(max_length=100)
+    titulacao = models.CharField(max_length=100)
+    areas = [('CHL', 'Ciências Humanas e Linguagens'), ('CNE', 'Ciências da Natureza e Exatas'), ('I', 'Informática'), ('E', 'Engenharias')]
+    area = models.CharField(choices=areas, max_length=100)
+
+    class Meta:
+        verbose_name = 'Avaliador'
+        verbose_name_plural = 'Avaliadores'
+
+class Diretor(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    nome = models.CharField('Nome', max_length=100)
+    areas = [('CHL', 'Ciências Humanas e Linguagens'), ('CNE', 'Ciências da Natureza e Exatas'), ('I', 'Informática'), ('E', 'Engenharias')]
+    area = models.CharField(choices=areas, max_length=100)
+
+    class Meta:
+        verbose_name = 'Diretor'
+        verbose_name_plural = 'Diretores'
+
+class Evento(models.Model):
+    titulo = models.CharField('Título', max_length=100)
+
+    class Meta:
+        verbose_name = 'Evento'
+        verbose_name_plural = 'Eventos'
+            
+        

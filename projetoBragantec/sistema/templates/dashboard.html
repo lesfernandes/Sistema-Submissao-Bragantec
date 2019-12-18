@@ -37,6 +37,14 @@
    		</section>
     	{% endblock content-header %}
 
+    	{% if request.user.is_avaliador %}
+			{% if not existe %}
+			<div class="content">
+				<a href="{% url 'register_avaliador' %}" class="btn btn-warning">Clique aqui para finalizar seu cadastro como Avaliador</a>
+			</div>
+			{% endif %}
+		{% endif %}
+
     	{% block content_outer %}
 	        <section class="content">
 	            {% block messages %}

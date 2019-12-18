@@ -4,7 +4,7 @@ Menu
 {% endblock %}
 {% block nav_links %}
 {% if request.user.is_authenticated %}
-	{% if request.user.is_staff %}
+	{% if request.user.is_staff or request.user.is_avaliador or request.user.is_diretor %}
 	<li>
 	    <a href="{% url 'sistema_projeto_list' %}">
 	        <i class="fa fa-pencil"></i>Projetos submetidos
@@ -18,15 +18,28 @@ Menu
 	</li>
 	<li>
 	    <a href="{% url 'sistema_projeto_list' %}">
-	        <i class="fa fa-pencil"></i>Minhas Submissões
+	        <i class="fa fa-list"></i>Minhas Submissões
 	    </a>
 	</li>
 	{% endif %}
-{% else %}
+	{% if request.user.is_staff or request.user.is_diretor %}
 	<li>
-	    <a href="{% url 'index' %}">
-	        <i class="fa fa-pencil"></i>Voltar
+	    <a href="{% url 'sistema_avaliador_list' %}">
+	        <i class="fa fa-list"></i>Lista de Avaliadores
 	    </a>
 	</li>
+	{% endif %}
+	{% if request.user.is_staff %}
+	<li>
+	    <a href="{% url 'create_event' %}">
+	        <i class="fa fa-calendar"></i>Criar Evento
+	    </a>
+	</li>
+	<li>
+		<a href="{% url 'sistema_diretor_list' %}">
+			<i class="fa fa-list"></i>Lista de Diretores
+		</a>
+	</li>
+	{% endif %}
 {% endif %}
 {% endblock %}

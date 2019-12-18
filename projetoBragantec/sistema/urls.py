@@ -15,5 +15,9 @@ urlpatterns = [
 	path('aceitar-submissao/<int:pk>', sistema.views.accept_submission, name='accept_submission'),
 	path('rejeitar-submissao/<int:pk>', sistema.views.reject_submission, name='reject_submission'),
 	path('gerar-pdf/', sistema.views.generate_pdf, name='generate_pdf'),
-	path('baixar-pdf/<int:pk>', sistema.views.download_pdf, name='download_pdf'),
+	path('baixar-arquivo/<int:pk>', sistema.views.download_archive, name='download_archive'),
+	path('registro-avaliador/', sistema.views.register_avaliador, name='register_avaliador'),
+	path('gerar-docx/', sistema.views.generate_docx, name='generate_docx'),
+	path('gerar-xlsx/', sistema.views.generate_xlsx, name='generate_xlsx'),
+	path('criar-evento/', sistema.views.create_event, name='create_event'),
 ]

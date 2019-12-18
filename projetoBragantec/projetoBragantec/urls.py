@@ -18,6 +18,16 @@ from django.urls import path, include
 from cruds_adminlte.urls import crud_for_model, crud_for_app
 from django.apps import apps
 from sistema.forms import AlteracoesForm
+from cruds_adminlte.crud import CRUDMixin
+from sistema.models import Avaliador, Diretor
+
+class MixinList(CRUDMixin):
+    def get_context_data(self, *args, **kwargs):
+        context = super(Mixin, self).get_context_data(*args, **kwargs)
+        context['avaliadores'] = Avaliador.objects.all()
+        context['diretores'] = Diretor.objects.all()
+        return context
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,13 +35,19 @@ urlpatterns = [
 ]
 
 urlpatterns += crud_for_model(
-	apps.get_model('sistema', 'Autor'), 
-	views=['list', 'detail', 'delete', 'update'],
-	login_required=True)
+	apps.get_model('sistema', 'Projeto'),
+	views=['delete', 'detail', 'update', 'list'], 
+	login_required=True, update_form=AlteracoesForm, mixin=MixinList)
 
 urlpatterns += crud_for_model(
-	apps.get_model('sistema', 'Projeto'),
-	views=['delete', 'detail', 'list', 'update'], 
-	login_required=True,
-    update_form = AlteracoesForm)
+    apps.get_model('sistema', 'Avaliador'),
+    views=['list'], login_required=True)
+
+urlpatterns += crud_for_model(
+    apps.get_model('sistema', 'Diretor'),
+    views=['list'], login_required=True)
+
+
+
+
 

@@ -70,7 +70,8 @@
 	</title>
 {% endblock %}
 
-<div>
+{% block body %}
+
 	{% block nav_header %}
         {% include 'adminlte/lib/_main_header.html' %}
     {% endblock %}
@@ -80,86 +81,93 @@
     {% endblock %}
 
     {% block content-wrapper %}
-    <div class="content-wrapper">
-    	{% block content-header %}
-    	<section class="content-header">
-    		<div class="breadcrumbs">
-    			<ul>
-    				{% block breadcrumbs %}
-			    		{{ block.super }}
-			    		<li>/</li>
-			    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
-			    		<li>/</li>
-			    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
-			    	{% endblock breadcrumbs %}
-    			</ul>
-    		</div>
-    		
-    	</section>
-    	{% endblock content-header%}
+    	{% if not existe_projeto %}
+	    <div class="content-wrapper">
+	    	{% block content-header %}
+	    	<section class="content-header">
+	    		<div class="breadcrumbs">
+	    			<ul>
+	    				{% block breadcrumbs %}
+				    		{{ block.super }}
+				    		<li>/</li>
+				    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
+				    		<li>/</li>
+				    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
+				    	{% endblock breadcrumbs %}
+	    			</ul>
+	    		</div>
+	    	</section>
+	    	{% endblock content-header%}
 
-    	{% block content-outer %}
-    	<section>
-    		<div class="content" id="qtdeOrientador">
-				<form>
-					<label>Quantidade de orientadores:</label>
-					<select id="qtde_orientador">
-						<option value='1'>1</option>
-						<option value='2'>2</option>
-					</select>				
-				</form>
-			</div>
-			<div class="content">
-				<form method="post" id="form4">
-					<fieldset>
-						<legend>Orientador</legend>
-						{% csrf_token %}
-						{% for field in form %}
-						<div>
-							{{ field.label_tag }}
-				            {{ field }}
-				            {{ field.errors }}
-						</div>
-						{% endfor %}
-						<div class="pure-controls">
-						    <button type="submit">Cadastrar</button>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div id='success4' class="content">
-				<p>CADASTRADO COM SUCESSO!</p>
-			</div>
-			<div class="content">
-				<form method="post" id="form5">
-					<fieldset>
-						<legend>Coorientador</legend>
-						{% csrf_token %}
-						{% for field in form %}
-						<div>
-							{{ field.label_tag }}
-				            {{ field }}
-				            {{ field.errors }}
-						</div>
-						{% endfor %}
-						<div class="pure-controls">
-						    <button type="submit">Cadastrar</button>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div id='success5' class="content">
-				<p>CADASTRADO COM SUCESSO!</p>
-			</div>
-			<div class="content">
-				<a href='{% url "register_autor" %}' style="color: black">Anterior</a>
-				<a href='{% url "submit_project" %}' style="color: black;">Próximo</a>
-			</div>
-    	</section>
-    	{% endblock content-outer %}
-    </div>
+	    	{% block content-outer %}
+	    	<section>
+	    		<div class="content" id="qtdeOrientador">
+					<form>
+						<label>Quantidade de orientadores:</label>
+						<select id="qtde_orientador">
+							<option value='1'>1</option>
+							<option value='2'>2</option>
+						</select>				
+					</form>
+				</div>
+				<div class="content">
+					<form method="post" id="form4">
+						<fieldset>
+							<legend>Orientador</legend>
+							{% csrf_token %}
+							{% for field in form %}
+							<div>
+								{{ field.label_tag }}
+					            {{ field }}
+					            {{ field.errors }}
+							</div>
+							{% endfor %}
+							<div class="pure-controls">
+							    <button type="submit">Cadastrar</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div id='success4' class="content">
+					<p>CADASTRADO COM SUCESSO!</p>
+				</div>
+				<div class="content">
+					<form method="post" id="form5">
+						<fieldset>
+							<legend>Coorientador</legend>
+							{% csrf_token %}
+							{% for field in form %}
+							<div>
+								{{ field.label_tag }}
+					            {{ field }}
+					            {{ field.errors }}
+							</div>
+							{% endfor %}
+							<div class="pure-controls">
+							    <button type="submit">Cadastrar</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div id='success5' class="content">
+					<p>CADASTRADO COM SUCESSO!</p>
+				</div>
+				<div class="content">
+					<a href='{% url "register_autor" %}' style="color: black">Anterior</a>
+					<a href='{% url "submit_project" %}' style="color: black;">Próximo</a>
+				</div>
+	    	</section>
+	    	{% endblock content-outer %}
+	    </div>
+	    {% else %}
+	    <div class="content-wrapper">
+	    	<section class="content-header">
+				<h3>Você já possui uma submissão!</h3>
+				<a href="{% url 'sistema_projeto_list' %}" class="btn btn-info">Minhas Submissões</a>
+			</section>
+		</div>
+		{% endif %}
    	{% endblock content-wrapper %}
-</div>
-
+{% endblock %}
 
 

@@ -32,6 +32,18 @@
 			}
 		});
 
+		var arrayIds = [];
+
+		/*$("#proximo").click(function(event){
+			event.preventDefault();
+			url = '?';
+		    i = 0;
+		    arrayIds.forEach(function(id){
+		        url = 'id'+i+'='+id+'&';
+		        i++;
+		    });
+		    window.location.href= '{% url "register_orientador" %}'+url;
+		});*/
 		
 		$('#form1').on('submit', function(event){
 			event.preventDefault();
@@ -43,6 +55,8 @@
 				success : function(json) {
 					$("#form1").hide();
 					$("#success1").show();
+					//json['id'] = {{ ultimo_id }};
+					//arrayIds.push(json['id']);
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -60,12 +74,15 @@
 				success : function(json) {
 					$("#form2").hide();
 					$("#success2").show();
+					//json['id'] = {{ ultimo_id }};
+					//arrayIds.push(json['id']);
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
 	        	}
 			});
 		});
+
 
 		$('#form3').on('submit', function(event){
 			event.preventDefault();
@@ -77,6 +94,8 @@
 				success : function(json) {
 					$("#form3").hide();
 					$("#success3").show();
+					//json['id'] = {{ultimo_id}};
+					//arrayIds.push(json['id']);
 	        	},
 	        	error : function(xhr,errmsg,err) {
 	            	console.log(xhr.status + ": " + xhr.responseText);           
@@ -107,6 +126,7 @@
     {% endblock %}
 
     {% block content-wrapper %}
+    {% if not existe_projeto %}
     <div class="content-wrapper">
     	{% block content-header %}
     	<section class="content-header">
@@ -122,7 +142,7 @@
     		
     	</section>
     	{% endblock content-header%}
-
+    	
     	{% block content-outer %}
     	<section>
     		<div class="content" id="qtdeAutor">
@@ -200,11 +220,19 @@
 				<p>CADASTRADO COM SUCESSO!</p>
 			</div>
 			<div class="content">
-				<a href='{% url "register_orientador" %}' style="color: black;">Próximo</a>
+				<a href='' style="color: black;" id='proximo'>Próximo</a>
 			</div>
 		</section>
 		{% endblock content-outer %}
 	</div>
+	{% else %}
+	<section>
+		<div class="content">
+			<h3>Você já possui uma submissão!</h3>
+			<a href="{% url 'sistema_projeto_list' %}" class="btn btn-info">Minhas Submissões</a>
+		</div>
+	</section>
+	{% endif %}
 	{% endblock content-wrapper %}
 
 </div>

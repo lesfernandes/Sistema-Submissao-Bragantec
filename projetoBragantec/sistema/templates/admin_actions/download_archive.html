@@ -1,0 +1,150 @@
+{% extends "dashboard.html" %}
+
+{% block js %}
+<script type="text/javascript">
+
+    function selecionarTudo(){
+        $(".campo").attr('checked', 'true');
+    };
+
+	$(document).ready(function(){
+
+        $('#tipoArquivo').change(function(){
+            var opcao = $(this).val();
+            switch(opcao){
+                case 'pdf':
+                    $("#campos").attr("action", "{% url 'generate_pdf' %}");
+                    break;
+                case 'docx':
+                    $('#campos').attr("action", "{% url 'generate_docx' %}");
+                    break;
+                case 'xlsx':
+                    $('#campos').attr("action", "{% url 'generate_xlsx' %}");
+                    break;
+            }
+        });
+
+	});
+</script>
+{% endblock js%}
+
+{% block body %}
+
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+        <label>Tipo de arquivo:</label>
+        <select id='tipoArquivo'>
+            <option value='docx'>DOCX</option>
+            <option value='pdf'>PDF</option>
+            <option value='xlsx'>XLSX</option>
+        </select>
+    	<h2 style="margin-top: 0px; text-align: center;">Selecione os campos para gerar o arquivo: </h2>
+    	<form method="post" id="campos">
+    	{% csrf_token %}
+    	<table class="table table-responsive table-bordered table-hover">
+    		<thead>
+    			<th><input type="checkbox" name="all" id="tudo" onClick="selecionarTudo();"></th>
+    			<th>Campo</th>
+    			<th>Valor</th>
+    		</thead>
+    		<tbody>
+    			<tr>
+    				<td><input type="checkbox" name="titulo" value="{{ projeto.titulo }}" class="campo"></td>
+    				<td>Título</td>
+    				<td>{{ projeto.titulo }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="resumo" value="{{ projeto.resumo }}" class="campo"></td>
+    				<td>Resumo</td>
+    				<td>{{ projeto.resumo }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="area" value="{{ projeto.area }}" class="campo"></td>
+    				<td>Área</td>
+    				<td>{{ projeto.area }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="palavras_chave" value="{{ projeto.palavras_chave}}" class="campo"></td>
+    				<td>Palavras Chave</td>
+    				<td>{{ projeto.palavras_chave }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="introducao" value="{{ projeto.introducao }}" class="campo"></td>
+    				<td>Introdução</td>
+    				<td>{{ projeto.introducao }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="objetivos" value="{{ projeto.objetivos }}" class="campo"></td>
+    				<td>Objetivos</td>
+    				<td>{{ projeto.ojetivos }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="material" value="{{ projeto.material }}" class="campo"></td>
+    				<td>Material</td>
+    				<td>{{ projeto.material }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="metodologia" value="{{ projeto.metodologia }}" class="campo"></td>
+    				<td>Metodologia</td>
+    				<td>{{ projeto.metodologia }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="resultados" value="{{ projeto.resultados }}" class="campo"></td>
+    				<td>Resultados</td>
+    				<td>{{ projeto.resultados }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="referencias_bibliograficas" value="{{ projeto.referencias_bibliograficas }}" class="campo"></td>
+    				<td>Referências Bibliogréficas</td>
+    				<td>{{ projeto.referencias_bibliograficas }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="link_video" value="{{ projeto.link_video }}" class="campo"></td>
+    				<td>Link do Vídeo</td>
+    				<td>{{ projeto.link_video }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_1" value="{{ projeto.email_autor_1 }}" class="campo"></td>
+    				<td>Email Autor 1</td>
+    				<td>{{ projeto.email_autor_1 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_2" value="{{ projeto.email_autor_2 }}" class="campo"></td>
+    				<td>Email Autor 2</td>
+    				<td>{{ projeto.email_autor_2 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_autor_3" value="{{ projeto.email_autor_3 }}" class="campo"></td>
+    				<td>Email Autor 3</td>
+    				<td>{{ projeto.email_autor_3 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_orientador_1" value="{{ projeto.email_orientador_1 }}" class="campo"></td>
+    				<td>Email Orientador 1</td>
+    				<td>{{ projeto.email_orientador_1 }}</td>
+    			</tr>
+    			<tr>
+    				<td><input type="checkbox" name="email_orientador_2" value="{{ projeto.email_orientador_2}}" class="campo"></td>
+    				<td>Email Orientador 2</td>
+    				<td>{{ projeto.email_orientador_2 }}</td>
+    			</tr>
+    		</tbody>
+    	</table>
+    		<input type="submit" value="Baixar">
+    	</form>
+    	
+  		
+	{% endblock %}
+	
+    </div>
+
+{% endblock %}
+
