@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import Projeto, Autor, Orientador
+from .models import Projeto, Autor, Orientador, Avaliador, Evento
 from cruds_adminlte import DatePickerWidget
 
 User = get_user_model()
@@ -29,7 +29,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email', 'is_avaliador', ]
 
 class AutorForm(forms.ModelForm):
 
@@ -78,3 +78,15 @@ class AlteracoesForm(forms.ModelForm):
     class Meta:
         model = Projeto
         exclude = ['user', 'plano_pesquisa']
+
+class AvaliadorForm(forms.ModelForm):
+    class Meta:
+        model = Avaliador
+        exclude = ['user']
+
+
+class EventoForm(forms.ModelForm):
+    class Meta:
+        model = Evento
+        fields = '__all__'
+        

@@ -85,7 +85,7 @@
                         </thead>
                         <tbody>
                             {% block tbody %}
-                                {% if request.user.is_staff %}
+                                {% if request.user.is_staff or request.user.is_diretor %}
                                     {% for object in object_list %}
                                         <tr>
                                             {% for field, field_name in fields.items %}
@@ -100,20 +100,24 @@
                                             {% endfor %}
                                             <td>
                                                 {% block actions %}
-                                                    <a href="{% url 'accept_submission' object.id %}" class="btn btn-success">{% trans "Aceitar" %}</a>
-                                                    <a href="{% url 'reject_submission' object.id %}" class="btn btn-danger">{% trans "Rejeitar" %}</a>
+                                                    {% if request.path == '/sistema/projeto/list' %}
+                                                        <a href="{% url 'accept_submission' object.id %}" class="btn btn-success">{% trans "Aceitar" %}</a>
+                                                        <a href="{% url 'reject_submission' object.id %}" class="btn btn-danger">{% trans "Rejeitar" %}</a>
 
-                                                    {% crud_url object "detail" namespace as url %}
-                                                    {% if url and 'detail' in views_available and crud_perms.detail %}
-                                                        <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
+                                                        {% crud_url object "detail" namespace as url %}
+                                                        {% if url and 'detail' in views_available and crud_perms.detail %}
+                                                            <a href="{{ url }}{{getparams}}" class="btn btn-info">{% trans "Ver Submissão Completa" %}</a>
+                                                        {% endif %}
+
+                                                        {% crud_url object "update" namespace as url %}
+                                                        {% if url and 'update' in views_available and crud_perms.update %}
+                                                            <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Alterações" %}</a>
+                                                        {% endif %}
+
+                                                        <a href="{% url 'download_archive' object.id %}" class="btn btn-primary">{% trans "Baixar" %}</a>
+                                                    {% elif request.path == '/sistema/avaliador/list' %}
+                                                        <p>ações</p>
                                                     {% endif %}
-
-                                                    {% crud_url object "update" namespace as url %}
-                                                    {% if url and 'update' in views_available and crud_perms.update %}
-                                                        <a href="{{ url }}{{getparams}}" class="btn btn-warning">{% trans "Alterações" %}</a>
-                                                    {% endif %}
-
-                                                    <a href="{% url 'download_pdf' object.id %}" class="btn btn-primary">{% trans "Baixar" %}</a>
                                                 {% endblock %}
                                             </td>
                                         </tr>
@@ -147,11 +151,23 @@
                                         {% endif %}
                                     {% endfor %}
                                 {% endif %}
-                          {% endblock tbody %}
+                            {% endblock tbody %}
                         </tbody>
                     {% else %}
-                      <thead><th></th></thead>
-                      <tbody><tr><td>{% trans "Nenhuma submissão foi encontrada." %}</td></tr></tbody>
+                        <thead><th></th></thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {% if request.path == '/sistema/projeto/list' %}
+                                        {% trans "Nenhuma submissão foi encontrada." %}
+                                    {% elif request.path == '/sistema/avaliador/list' %}
+                                        {% trans "Nenhum avaliador foi encontrado." %}
+                                    {% elif request.path == '/sistema/diretor/list' %}
+                                        {% trans "Nenhum diretor foi encontrado." %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
                     {% endif %}
                     </table>
                     {% if paginate_position == 'Bottom' or paginate_position == 'Both' %}
@@ -163,4 +179,3 @@
         </div>
     </div>
 {% endblock content %}
-

@@ -10,7 +10,8 @@
 	</title>
 {% endblock %}
 
-<div>
+{% block body %}
+
 	{% block nav_header %}
         {% include 'adminlte/lib/_main_header.html' %}
     {% endblock %}
@@ -20,45 +21,55 @@
     {% endblock %}
 
     {% block content-wrapper %}
-    <div class="content-wrapper">
-    	{% block content-header %}
-    	<section class="content-header">
-    		<div class="breadcrumbs">
-    			<ul>
-    				{% block breadcrumbs %}
-			    		{{ block.super }}
-			    		<li>/</li>
-			    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
-			    		<li>/</li>
-			    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
-			    		<li>/</li>
-			    		<li><a href="{% url 'submit_project' %}">Projeto</a></li>
-			    	{% endblock breadcrumbs %}
-    			</ul>
-    		</div>
-    		
-    	</section>
-    	{% endblock content-header%}
-    	{% block content-outer %}
-    	<section>
-    		<div class="content">
-				<form method="post">
-					{% csrf_token %}
-					<fieldset>
-						{% for field in form %}
-						<div>
-							{{ field.label_tag }}
-				            {{ field }}
-				            {{ field.errors }}
-						</div>
-						{% endfor %}
-						<div class="pure-controls">
-				            <button type="submit">Cadastrar</button>
-				        </div>
-				</fieldset>
-				</form>
+	    {% if not existe_projeto %}
+		    <div class="content-wrapper">
+		    	{% block content-header %}
+		    	<section class="content-header">
+		    		<div class="breadcrumbs">
+		    			<ul>
+		    				{% block breadcrumbs %}
+					    		{{ block.super }}
+					    		<li>/</li>
+					    		<li><a href="{% url 'register_autor' %}">Autores</a></li>
+					    		<li>/</li>
+					    		<li><a href="{% url 'register_orientador' %}">Orientadores</a></li>
+					    		<li>/</li>
+					    		<li><a href="{% url 'submit_project' %}">Projeto</a></li>
+					    	{% endblock breadcrumbs %}
+		    			</ul>
+		    		</div>
+		    	</section>
+	    		{% endblock content-header%}
+    			{% block content-outer %}
+		    	<section>
+		    		<div class="content">
+						<form method="post">
+							{% csrf_token %}
+							<fieldset>
+								{% for field in form %}
+								<div>
+									{{ field.label_tag }}
+						            {{ field }}
+						            {{ field.errors }}
+								</div>
+								<br>
+								{% endfor %}
+								<div class="pure-controls">
+						            <button type="submit">Cadastrar</button>
+						        </div>
+						</fieldset>
+						</form>
+					</div>
+				</section>
+				{%endblock content-outer%}
 			</div>
-		</section>
-		{%endblock content-outer%}
+		{% else %}
+		<div class="content-wrapper">
+	    	<section class="content-header">
+				<h3>Você já possui uma submissão!</h3>
+				<a href="{% url 'sistema_projeto_list' %}" class="btn btn-info">Minhas Submissões</a>
+			</section>
+		</div>
+		{% endif%}
 	{% endblock %}
-</div>
+{% endblock %}

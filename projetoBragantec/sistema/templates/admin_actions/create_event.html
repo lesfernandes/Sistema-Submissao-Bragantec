@@ -1,0 +1,66 @@
+{% extends "dashboard.html" %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+
+{% block title_outer %}
+	<title>
+		{% block title %} 
+			Criar Evento
+		{% endblock %}
+	</title>
+{% endblock %}
+
+<div>
+	{% block nav_header %}
+        {% include 'adminlte/lib/_main_header.html' %}
+    {% endblock %}
+
+    {% block nav_sidebar %}
+        {% include 'adminlte/lib/_main_sidebar.html' %}
+    {% endblock %}
+
+    {% block content-wrapper %}
+    <div class="content-wrapper">
+    	{% block content-header %}
+    	<section class="content-header">
+    		<div class="breadcrumbs">
+    			<ul>
+    				{% block breadcrumbs %}
+			    		{{ block.super }}
+			    		<li>/</li>
+			    		<li><a href="{% url 'create_event' %}">Criar Evento</a></li>
+			    	{% endblock breadcrumbs %}
+    			</ul>
+    		</div>
+    		
+    	</section>
+    	{% endblock content-header%}
+
+    	{% block content-outer %}
+    	<section>
+    		<div class="content">
+				<form method='post'>
+					{% csrf_token %}
+					<fieldset>
+					{% for field in form %}
+						<div>
+							{{ field.label_tag }}
+					        {{ field }}
+					        {{ field.errors }}
+					    </div>
+					{% endfor %}
+					<br>
+					<div>
+						<button type="submit">Cadastrar</button>
+					</div>
+					</fieldset>
+				</form>
+			</div>
+    	</section>
+    	{% endblock content-outer %}
+    </div>
+   	{% endblock content-wrapper %}
+</div>
+
+
+
